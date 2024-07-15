@@ -57,7 +57,7 @@ def use_modified_input_params(**input_params):
 
 
 
-def TT2_Model(**input_params):
+def TaylorT2_Model(**input_params):
     """
     Returns tapered time domain gravitational polarizations for TT2 waveform model containing only the (l,|m|) = (2,2) mode.
 
