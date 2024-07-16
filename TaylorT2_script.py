@@ -175,33 +175,21 @@ def t_from_x(v, v0, e0, M, eta):
 # In[3]:
 
 
-# "Hinder+ modified all 20 simulations SEOBNRv4 model, full frequency range --Feb 16
-g=open('New_tshift_H+modified_20hyb_Feb16.txt',"r") 
-lines=g.readlines() 
-A=[] 
-for x in lines: 
-    A.append(float(x.split()[1])) 
-g.close()
+A=[-622.279, -330.308, -27.0717, -141.883, 5132.37, 6787.92, -17060.5, -2030.2, -5.38518, 250.49, 1.04693, 6608.44, -18.0212] 
+
 
 def tshift_Hinsp(q,e,l): 
     return A[0] + A[1]*q + A[2]*q**2 + A[3]*e + A[4]*e**2 + A[5]*e*q + A[6]*(e**2)*q + A[7]*(e)*math.cos(l + A[8]) + A[9]*(e**1)*(q**1)*math.cos(e*l + A[10]) + A[11]*(e**2)*math.cos(l + A[12])
 
-g=open('New_tamp_H+modified_20hyb_Feb16.txt',"r") 
-lines=g.readlines() 
-B=[] 
-for x in lines: 
-    B.append(float(x.split()[1])) 
-g.close()
+B=[24215.3, -120939.0, 91243.2, -166056.0, 328096.0, 673029.0, -1348170.0, -1033.39, 119.166, 3251.62, -980.368, -5624.0, 681.809] 
+
 
 def tamp_Hinsp(eta,e,l): 
     return B[0] + B[1]*eta + B[2]*eta**2 + B[3]*e + B[4]*e**2 + B[5]*e*eta + B[6]*(e**2)*eta + B[7]*e*math.cos(l + B[8]) + B[9]*(e**1)*(eta**1)*math.cos(l + B[10]) + B[11]*(e**2)*math.cos(e*l + B[12])
 
-g=open('New_tfreq_H+modified_20hyb_Feb16.txt',"r") 
-lines=g.readlines() 
-C=[] 
-for x in lines: 
-    C.append(float(x.split()[1])) 
-g.close()
+
+C=[-1877112.1819861324, 8928785.261869295, -5753255.361022231, 13060669.274835777, -25197657.592986427, -52105285.776843265, 104979412.53427844, 764720.9257883099, 290.15273485358364, 181821.50372281516, 61.27144003218318, -1308145.2810294377, 446.12549772201976] 
+
 
 def tfreq_Hinsp(eta,e,l): 
     return C[0] + C[1]*eta + C[2]*eta**2 + C[3]*e + C[4]*e**2 + C[5]*e*eta + C[6]*(e**2)*eta + C[7]*e*eta*math.cos(l + C[8]) + C[9]*(e)*math.cos(l + C[10]) + C[11]*(e**2)*math.cos(e*l + C[12])
