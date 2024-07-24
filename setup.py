@@ -27,11 +27,11 @@ setup (
     download_url = 'https://github.com/dipakpratul2014/pycbc_TT2Model_plugin',
     keywords = ['pycbc', 'signal processing', 'gravitational waves'],
     install_requires = ['pycbc'],
-    py_modules = ['TT2_Model'],
+    py_modules = ['TT2_Model_new'],
     packages = find_packages(),
     entry_points={
         "pycbc.waveform.td": [
-            "TT2Model = TT2_Model:TaylorT2_Model"
+            "TT2Model = TT2_Model_new:TaylorT2_Model"
         ],
     },
     classifiers=[
