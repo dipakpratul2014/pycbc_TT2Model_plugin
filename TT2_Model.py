@@ -78,7 +78,7 @@ def TaylorT2_Model(**input_params):
 
     wf_input_params = use_modified_input_params(**input_params)
     
-    hp, hc = TaylorT2_script.get_TT2_model(**wf_input_params) #, modes_to_use=[(2, 2)])
+    hp, hc = get_TT2_model(**wf_input_params) #, modes_to_use=[(2, 2)])
     hp_ts = TimeSeries(hp, input_params['delta_t'])
     hc_ts = TimeSeries(hc, input_params['delta_t'])
     
