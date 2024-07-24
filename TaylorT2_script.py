@@ -372,8 +372,21 @@ def get_TT2_Model(m,q0,e0,l0,fmin,angle,d,delta_t):
     #print(t2-t1)
     
     #Circular IMR
-    sp, sc = get_td_waveform(approximant='SEOBNRv4', mass1=M1, mass2=M2, delta_t=delta_t, f_lower=fmin, distance=d)
-    h22IMR = sp+1j*sc
+    #sp, sc = get_td_waveform(approximant='SEOBNRv4', mass1=M1, mass2=M2, delta_t=delta_t, f_lower=fmin, distance=d)
+    #h22IMR = sp+1j*sc
+
+    wfm_gen = GenerateWaveform({"mass1": M1,"mass2": M2,"spin1x": 0, "spin1y": 0, "spin1z": 0, "spin2x": 0, "spin2y": 0, 
+        "spin2z": 0, "deltaT": delta_t, "f22_start": fmin,"distance": d,"inclination": 0,"approximant": "SEOBNRv5HM"})
+    # times_eob = sp.sample_times
+    times_eob, hlm_eob = wfm_gen.generate_td_modes()
+    times_eob = times_eob - times_eob[np.argmax(abs(hlm_eob[(2,2)]))]
+    # #plt.plot(times,hlm_eob[(2,2)])
+    sp = np.real(hlm_eob[(2,2)]) * mode2polfac
+    sc = np.imag(hlm_eob[(2,2)]) * mode2polfac
+    
+    
+    h22IMR = sp-1j*sc
+    
     
     
     tshift = -tshift_Hinsp(q0,e0,l0)*M*MTSUN_SI
