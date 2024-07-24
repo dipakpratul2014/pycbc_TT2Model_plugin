@@ -1,7 +1,7 @@
 from pycbc.types.timeseries import TimeSeries
 from copy import deepcopy
 
-import TaylorT2_script
+%run TaylorT2_script.py
 
 try:
     # some versions of pycbc include td_taper in pycbc.waveform
