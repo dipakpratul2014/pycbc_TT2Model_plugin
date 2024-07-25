@@ -17,7 +17,7 @@ def get_long_description():
     return long_description
 
 setup (
-    name = 'pycbc-TT2Model-plugin',
+    name = 'pycbc-TaylorT2Ecc-plugin',
     version = VERSION,
     description = 'Waveform plugin for PyCBC',
     long_description = get_long_description(),
@@ -31,7 +31,7 @@ setup (
     packages = find_packages(),
     entry_points={
         "pycbc.waveform.td": [
-            "TT2Model = TT2_Model_new:TaylorT2_Model"
+            "TaylorT2Ecc = TT2_Model_new:TaylorT2_Model"
         ],
     },
     classifiers=[
