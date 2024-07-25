@@ -26,7 +26,7 @@ setup (
     url = 'http://www.pycbc.org/',
     download_url = 'https://github.com/dipakpratul2014/pycbc_TT2Model_plugin',
     keywords = ['pycbc', 'signal processing', 'gravitational waves'],
-    install_requires = ['pycbc'],
+    install_requires = ['pycbc', 'pyseobnr'],
     py_modules = ['TT2_Model_new'],
     packages = find_packages(),
     entry_points={
