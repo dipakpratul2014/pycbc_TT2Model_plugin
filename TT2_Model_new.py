@@ -51,12 +51,8 @@ def use_modified_input_params(**input_params):
         if verbose:
                 print(f"Using mean_anomaly from `alpha1` column, value = {mean_anomaly}")
     return(modified_input_params)
-
-
-
-
-
-
+    
+    
 def TaylorT2_Model(**input_params):
     """
     Returns tapered time domain gravitational polarizations for TT2 waveform model containing only the (l,|m|) = (2,2) mode.
@@ -84,7 +80,7 @@ def TaylorT2_Model(**input_params):
     
     hp_tapered = taper_signal(hp_ts)
     hc_tapered = taper_signal(hc_ts)
-    return(hp_tapered, hc_tapered)
+    return(hp_tapered, hc_tapered)    
 
 
 
@@ -438,23 +434,30 @@ def TT2_INSP_Eber22_new(M0,q,e0,l0,flow,inc,d0,delta_t):
     return np.array(hp_intrp), np.array(hc_intrp), np.array(t_intrp)
 
 
-def get_TT2_Model(m,q0,e0,l0,fmin,angle,d,delta_t):
+def get_TT2_Model(mass1, mass2, f_lower, delta_t, eccentricity, inclination, distance, mean_per_ano, **kwargs):
     
-    M=m
-    M1=q0*M/(1+q0)
-    M2=M/(1+q0)
+    #M=m
+    M1=mass1 #q0*M/(1+q0)
+    M2=mass2 #M/(1+q0)
+    q0 = M1/M2
     eta=q0/(1+q0)**2
+    M = M1+M2
+    #q0 = M1/M2
+    e0 = eccentricity
+    l0 = mean_per_ano
+    fmin = f_lower
     M_SI=M*MSUN_SI
+    d = distance
     D_SI=(10**(6))*PC_SI*d
-    inc = angle
-    angle = (np.pi/180)*angle
+    inc = inclination
+    angle = (np.pi/180)*inc
         
     mode2polfac=4*(5/(64*np.pi))**(1/2)
     
-    import time
-    t1 = time.time()
+    #import time
+    #t1 = time.time()
     hp, hc, tinsp = TT2_INSP_Eber22_new(M,q0,e0,l0,fmin,angle,d,delta_t)
-    t2 = time.time()
+    #t2 = time.time()
     #print(t2-t1)
     
     #Circular IMR
@@ -462,7 +465,7 @@ def get_TT2_Model(m,q0,e0,l0,fmin,angle,d,delta_t):
     #h22IMR = sp+1j*sc
 
     wfm_gen = GenerateWaveform({"mass1": M1,"mass2": M2,"spin1x": 0, "spin1y": 0, "spin1z": 0, "spin2x": 0, "spin2y": 0, 
-        "spin2z": 0, "deltaT": delta_t, "f22_start": fmin,"distance": d,"inclination": 0,"approximant": "SEOBNRv5HM"})
+        "spin2z": 0, "deltaT": delta_t, "f22_start": fmin,"distance": d,"inclination": angle,"approximant": "SEOBNRv5HM"})
     # times_eob = sp.sample_times
     times_eob, hlm_eob = wfm_gen.generate_td_modes()
     times_eob = times_eob - times_eob[np.argmax(abs(hlm_eob[(2,2)]))]
@@ -1737,8 +1740,6 @@ chiA * chiS + -18949901/326592 * ( SO )**( 2 ) * ( chiS )**( 2 ) ) ) \
 numpy.log( 3 ) + -3317/252 * numpy.log( x0 ) ) ) ) ) ) ) ) ) ) ) ) ) \
 ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
     return PHI_TT2
-
-
 
 
 
