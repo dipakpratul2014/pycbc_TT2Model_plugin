@@ -573,12 +573,32 @@ def get_TT2_Model(mass1, mass2, f_lower, delta_t, eccentricity, inclination, dis
     
     ht = (mode2polfac/4)*(((1+math.cos(angle))**2 * (hp_f_model - 1j*hc_f_model)) + ((1-math.cos(angle))**2 * (hp_f_model + 1j*hc_f_model)))
     hplus = np.real(ht)
-    hcross = np.imag(ht)
+    hcross = np.imag(ht) 
     
     hp_model_TS = TimeSeries(hplus,delta_t)
     hc_model_TS = TimeSeries(hcross,delta_t)
+    
+    t = hp_model_TS.sample_times
+    hp_interp = interp1d(t, hp_model_TS)
+    hc_interp = interp1d(t, hc_model_TS)
+    t_arr = np.arange(t[0], t[-1], delta_t)
+
+    hp_arr = (hp_interp(t_arr))
+    hc_arr = (hc_interp(t_arr))
+    ht_arr = hp_arr + 1j*hc_arr
+    
+    t_peak_idx = np.argmax(np.abs(ht_arr))
+    t_peak = t_arr[t_peak_idx]
+    t_peak_to_end = t_arr[-1] - t_peak
+    t_start_to_peak = t_peak - t_arr[0]
+
+    t_shifted = (t_arr - t_arr[t_peak_idx])
+    
+    hp_hybrid = TimeSeries(hp_arr, delta_t = delta_t, epoch = t_shifted[0])
+    hc_hybrid = TimeSeries(hc_arr, delta_t = delta_t, epoch = t_shifted[0])
   
-    return hp_model_TS, hc_model_TS
+    return hp_hybrid, hc_hybrid
+    #return hp_model_TS, hc_model_TS
 
 
 # ## Amplitude $(\ell , m)$ = (2, 2)
